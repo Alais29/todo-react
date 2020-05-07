@@ -2,7 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## React Todo List
 Simple todo list built with React just for practice. 
-Planning to add localStorage and an input field to add tasks.
+
+##### Pending
+- Add functionality with localStorage
 
 ## Available Scripts
 
