@@ -1,0 +1,14 @@
+.btn {
+  flex-grow: 1;
+  border: none;
+  background: none;
+  background-color: rgb(206, 129, 15);
+  border: solid 1px rgb(206, 129, 15);
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  &:hover {
+    background-color: rgb(179, 111, 11);
+    border: solid 1px rgb(179, 111, 11);
+  }
+}
