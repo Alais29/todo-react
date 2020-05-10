@@ -4,7 +4,7 @@ import './CustomButton.styles.scss'
 
 function CustomButton({text}) {
   return (
-    <button className="btn">{text}</button>
+    <button className="btn-add">{text}</button>
   )
 }
 

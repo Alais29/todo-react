@@ -1,8 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## React Todo List
-Simple todo list built with React just for practice. 
-Planning to add localStorage and an input field to add tasks.
+Simple todo list built with React to practice. You can add new notes, mark them as done and delete them. The notes are stored in local storage so they'll persist even if the page is updated.
 
 ## Available Scripts
 

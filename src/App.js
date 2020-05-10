@@ -2,25 +2,24 @@ import React, { Fragment } from "react";
 import TodoItem from "./components/TodoItem/TodoItem.component";
 import Input from "./components/Input/Input.component";
 import CustomButton from "./components/CustomButton/CustomButton.component";
-import todosData from "./todosData";
 import "./App.css";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos: todosData,
       newTodo: '',
-      newTodoList: [] 
+      todoList: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClickDelete = this.handleClickDelete.bind(this);
   }
 
   handleChange(id) {
     this.setState((prevState) => {
-      const updatedTodos = prevState.todos.map((todo) => {
+      const updatedTodos = prevState.todoList.map(todo => {
         if (todo.id === id) {
           return {
             ...todo,
@@ -30,7 +29,7 @@ class App extends React.Component {
         return todo;
       });
       return {
-        todos: updatedTodos,
+        todoList: updatedTodos
       };
     });
   }
@@ -43,19 +42,53 @@ class App extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.setState((prevState) => {
+      let newId;
+      if(prevState.todoList.length === 0) {
+        newId = 1;
+      } else {
+        newId = prevState.todoList[prevState.todoList.length - 1].id + 1;
+      }
       const newItem = {
-        id: prevState.newTodoList.length === 0 ? prevState.todos.length + 1 : prevState.newTodoList[prevState.newTodoList.length - 1].id + 1,
+        // id: prevState.todoList.length + 1,
+        id: newId,
         text: prevState.newTodo,
         completed: false
       }
       return {
-        newTodoList: [...prevState.newTodoList, newItem]
+        todoList: [...prevState.todoList, newItem]
       };
-    })
+    });
+    this.setState({newTodo: ''})    
+  }
+
+  handleClickDelete(id) {
+    this.setState((prevState) => {
+      const currentTodos = prevState.todoList.filter(todo => {
+        if(todo.id !== id) {
+          return todo;
+        }
+      });
+      return {
+        todoList: currentTodos
+      };
+    });
+  }
+
+  componentDidMount() {
+    const localTodoList = JSON.parse(localStorage.getItem('tasks'))
+    if(localStorage.getItem('tasks')) {
+      this.setState({
+        todoList: localTodoList
+      })
+    }
+  }
+  
+  componentDidUpdate() {
+    localStorage.setItem('tasks', JSON.stringify(this.state.todoList))
   }
 
   render() {
-    const { todos, newTodo, newTodoList } = this.state;
+    const {newTodo, todoList} = this.state;
     return (
       <Fragment>
         <h1>Todos List</h1>
@@ -70,18 +103,12 @@ class App extends React.Component {
             />
             <CustomButton text="Add Text" />
           </form>
-          {todos.map((item) => (
+          {todoList.length === 0 ? null : todoList.map((item) => (
             <TodoItem
               key={item.id}
               item={item}
               handleChange={this.handleChange}
-            />
-          ))}
-          {newTodoList.length === 0 ? null : newTodoList.map((item) => (
-            <TodoItem
-              key={item.id}
-              item={item}
-              handleChange={this.handleChange}
+              handleClickDelete={this.handleClickDelete}
             />
           ))}
         </div>
