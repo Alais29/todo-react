@@ -67,6 +67,7 @@ class App extends React.Component {
         if(todo.id !== id) {
           return todo;
         }
+        return null;
       });
       return {
         todoList: currentTodos
